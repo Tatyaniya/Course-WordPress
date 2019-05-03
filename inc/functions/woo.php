@@ -247,4 +247,6 @@ add_filter( 'woocommerce_cart_item_price', 'my_custom_show_sale_price_at_cart', 
     remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
     remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
 
+    // удаляем похожие товары из корзины
+    remove_action('woocommerce_cart_collaterals', 'woocommerce_cross_sell_display');
 }

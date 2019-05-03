@@ -136,7 +136,7 @@ do_action( 'woocommerce_before_cart' ); ?>
                             </div>
                         </div>
 					</div>
-					<?php
+				    <?php
 				}
 			}
 			?>
@@ -145,61 +145,36 @@ do_action( 'woocommerce_before_cart' ); ?>
         <div class="cart__result">
             <div class="promo">
 
-                <?php if ( wc_coupons_enabled() ) { ?>
-                    <div class="coupon">
-                        <input type="text" name="coupon_code" class="input-text promo__input log__input" id="coupon_code" value="" placeholder="Код купона" /> <button type="submit" class="button btn promo__btn btn__woo" name="apply_coupon" value="Применить купон">Применить купон</button>
-                        <?php do_action( 'woocommerce_cart_coupon' ); ?>
-                    </div>
-                <?php } ?>
+                <div class="coupon">
+                    <?php if ( wc_coupons_enabled() ) { ?>
+                        <input type="text" name="coupon_code" class="input-text promo__input log__input" id="coupon_code" value="" placeholder="Код купона" /> <button type="submit" class="button btn__mrg btn promo__btn btn__woo" name="apply_coupon" value="Применить купон">Применить купон</button>
+                    <?php } ?>
+                    <?php do_action( 'woocommerce_cart_coupon' ); ?>
 
-            </div>
-            <div class="result">
-                <div class="result__title">Итого</div>
-                <div class="result__row">
-                    <div class="result__name">Всего</div>
-                    <div>382<span class="currency">$</span></div>
+                    <button type="submit" class="button btn promo__btn btn__woo" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
+
+                    <?php do_action( 'woocommerce_cart_actions' ); ?>
+                    <?php wp_nonce_field( 'woocommerce-cart', 'woocommerce-cart-nonce' ); ?>
                 </div>
-                <div class="result__row">
-                    <div class="result__name">Общий итог</div>
-                    <div>382<span class="currency">$</span></div>
-                </div>
-                <a href="order-regist.html" class="result__btn btn">Оформить заказ</a>
+               
             </div>
+
+                <?php
+                    /**
+                     * Cart collaterals hook.
+                     *
+                     * @hooked woocommerce_cross_sell_display
+                     * @hooked woocommerce_cart_totals - 10
+                     */
+                    do_action( 'woocommerce_cart_collaterals' );
+                ?>
+
         </div>
+
+        <?php do_action( 'woocommerce_after_cart_contents' ); ?>
     </div>
 
-	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
-		
-		<tbody>
-			<tr>
-				<td colspan="6" class="actions">
-
-					
-
-					<button type="submit" class="button" name="update_cart" value="<?php esc_attr_e( 'Update cart', 'woocommerce' ); ?>"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
-
-					<?php do_action( 'woocommerce_cart_actions' ); ?>
-
-					<?php wp_nonce_field( 'woocommerce-cart', 'woocommerce-cart-nonce' ); ?>
-				</td>
-			</tr>
-
-			<?php do_action( 'woocommerce_after_cart_contents' ); ?>
-		</tbody>
-	</table>
 	<?php do_action( 'woocommerce_after_cart_table' ); ?>
 </form>
-
-<div class="cart-collaterals">
-	<?php
-		/**
-		 * Cart collaterals hook.
-		 *
-		 * @hooked woocommerce_cross_sell_display
-		 * @hooked woocommerce_cart_totals - 10
-		 */
-		do_action( 'woocommerce_cart_collaterals' );
-	?>
-</div>
 
 <?php do_action( 'woocommerce_after_cart' ); ?>

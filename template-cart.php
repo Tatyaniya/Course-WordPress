@@ -1,12 +1,12 @@
 <?php
 /**
- *  Template name: Шаблон Корзины
+ *  Template name: Шаблон Корзины и Оформление заказа
  */
 
 get_header();
 ?>
 
-<section class="single cart">
+<section class="single cart pay">
     <div class="wrapper">
 
         <?php while ( have_posts() ) : the_post(); the_content(); endwhile; ?>

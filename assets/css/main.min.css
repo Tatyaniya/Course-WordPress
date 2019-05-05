@@ -2549,6 +2549,7 @@ button {
 }
 
 .log,
+.woocommerce-checkout,
 .yikes-easy-mc-form {
   position: relative;
   padding-top: 5px;
@@ -2557,6 +2558,7 @@ button {
 }
 
 .log label,
+.woocommerce-checkout label,
 .yikes-easy-mc-form label {
   display: inline-block;
   margin: 0 0 7px;
@@ -2582,6 +2584,7 @@ button {
 }
 
 .log__input,
+.input-text,
 .yikes-easy-mc-form input[type=email].log__input,
 .yikes-easy-mc-form input[type=text].log__input  {
   display: block;
@@ -2601,7 +2604,10 @@ button {
 
 .log__input[name="message"],
 .log__input[name="comment"],
-.log__input[name="contact[message]"] {
+.log__input[name="contact[message]"],
+.input-text[name="message"],
+.input-text[name="comment"],
+.input-text[name="contact[message]"] {
   max-width: 100%;
   min-height: 140px;
   padding: 20px 40px 20px 18px !important;
@@ -2699,18 +2705,22 @@ button {
   margin-bottom: 0 !important;
 }
 
-.log__input.error {
+.log__input.error,
+.input-text.error {
   border: 1px solid #f33251;
   color: #f33251;
   background: url(../img/close.svg) no-repeat 97% 52%/11px 11px;
 }
 
 .log__input[type="password"].valid,
-.log__input[type="password"].error {
+.log__input[type="password"].error,
+.input-text[type="password"].valid,
+.input-text[type="password"].error {
   background: none;
 }
 
-.log__input.valid {
+.log__input.valid,
+.input-text.valid {
   border: 1px solid #0af !important;
   background: url(../img/check.svg) no-repeat 98% 52%/14px 14px;
 }
@@ -6226,6 +6236,7 @@ button {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
 .pay__wrap .check {
@@ -6268,13 +6279,23 @@ button {
   color: #858585;
 }
 
-.pay .log__input {
+.pay .log__input,
+.pay .input-text  {
   max-width: 614px;
   font-size: 14px;
 }
 
-.pay .log__input[name="message"] {
+.pay .log__input[name="message"],
+.pay .input-text[name="message"] {
   min-height: 147px;
+}
+
+.pay .input-text[name="order_comments"] {
+    min-height: 147px;
+    padding: 20px 40px 20px 18px !important;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    height: 147px;
 }
 
 .pay .log__wrap {
@@ -6417,12 +6438,26 @@ button {
   font-size: 14px;
 }
 
-.log .selectize-control .selectize-input {
+.select2-container--default .select2-selection--single {
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid #c3c3c3;
+    border-radius: 3px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 36px;
+    color: #878787; 
+}
+
+.log .selectize-control .selectize-input,
+.select2-container--default .select2-selection--single {
   overflow: inherit;
   line-height: inherit;
 }
 
-.log .selectize-control .selectize-input input {
+.log .selectize-control .selectize-input input,
+.select2-container--default .select2-selection--single input {
   font-size: 14px;
   color: #878787;
 }
@@ -6512,6 +6547,7 @@ button {
   max-width: 454px;
   padding-right: 20px;
   position: relative;
+  font-weight: 500 !important;
 }
 
 .table__value.name span.count {
@@ -6522,6 +6558,11 @@ button {
   margin-top: -6px;
   font-family: 'proxima', sans-serif;
   font-weight: 700;
+}
+
+.table__value .woocommerce-Price-amount {
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .table .row {

@@ -82,7 +82,7 @@ class Wayup_Subscribe_Widget extends WP_Widget {
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" />
         </p>
         <p>
-			<label for="<?php echo $this->get_field_id( 'shortcode' ); ?>">Заголовок</label>
+			<label for="<?php echo $this->get_field_id( 'shortcode' ); ?>">Шорткод</label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'shortcode' ); ?>" name="<?php echo $this->get_field_name( 'shortcode' ); ?>" value="<?php echo $instance['shortcode']; ?>" />
 		</p>
 	<?php

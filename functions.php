@@ -196,6 +196,7 @@ require get_template_directory() . '/inc/widgets/widget-about.php';
 require get_template_directory() . '/inc/widgets/widget-custom-category.php';
 require get_template_directory() . '/inc/widgets/widget-subscribe.php';
 require get_template_directory() . '/inc/widgets/widget-custom-search.php';
+require get_template_directory() . '/inc/widgets/widget-filter.php';
 
 /**
  * Подключаем Шорткоды

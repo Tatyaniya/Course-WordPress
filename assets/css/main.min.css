@@ -555,9 +555,8 @@ button {
   margin-top: 5px;
 }
 
-.heading__bag:after {
+.heading__bag .count {
   position: absolute;
-  content: '2';
   color: #fff;
   font-size: 9px;
   width: 14px;
@@ -2789,8 +2788,10 @@ button {
 }
 
 .log .check input[type="checkbox"]:checked ~ label:after,
+.log .check input[type="checkbox"]:checked ~ .label:after,
 .log .check input[type="radio"]:checked ~ label:after,
-.log .wpcf7-checkbox:checked ~ label:after {
+.log .wpcf7-checkbox:checked ~ label:after,
+.log__list .check input[type="radio"]:checked ~ .label:after {
   content: '';
   background: url(../img/check.svg) no-repeat center/10px 10px;
   width: 18px;
@@ -6243,6 +6244,10 @@ button {
   margin-top: 0;
 }
 
+.pay__block {
+    margin-bottom: 30px;
+}
+
 .pay__block:nth-child(1) {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
@@ -6277,6 +6282,7 @@ button {
 
 .pay .log__group.check label:not(.error) {
   color: #858585;
+  line-height: 1.4;
 }
 
 .pay .log__input,
@@ -6299,12 +6305,13 @@ button {
 }
 
 .pay .log__wrap {
-  max-width: 614px;
+  align-items: center;
+  justify-content: space-between !important;
 }
 
-.pay .log__wrap .log__group {
+/* .pay .log__wrap .log__group {
   width: 48%;
-}
+} */
 
 .pay .log select {
   display: block;
@@ -6320,10 +6327,10 @@ button {
   display: none;
 }
 
-.pay .log__group.check {
+/* .pay .log__group.check {
   max-width: 370px;
   margin-top: 7px;
-}
+} */
 
 .pay .log__group.check label {
   white-space: normal;
@@ -6359,14 +6366,13 @@ button {
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .log__list .check {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  width: 25%;
 }
 
 .log__list .check:after {
@@ -6377,7 +6383,7 @@ button {
   height: 22px;
 }
 
-.log__list .check:nth-child(1):after {
+ /* .log__list .check:nth-child(1):after {
   display: none;
 }
 
@@ -6392,7 +6398,7 @@ button {
 
 .log__list .check:nth-child(3) {
   width: 305px;
-}
+} 
 
 .log__list .check:nth-child(3):after {
   max-width: 271px;
@@ -6406,13 +6412,14 @@ button {
 .log__list .check:nth-child(4):after {
   max-width: 81px;
   background: url(../img/operators.jpg) no-repeat left top;
-}
+} */
 
 .log__list .check input[type="radio"] ~ label:before {
   top: 2px;
 }
 
-.log__list .check input[type="radio"]:checked ~ label:after {
+.log__list .check input[type="radio"]:checked ~ label:after,
+.log__list .check input[type="radio"]:checked ~ .label:after {
   top: 2px;
 }
 
@@ -6420,9 +6427,9 @@ button {
   font-size: 16px;
 }
 
-.log__list .log__group:first-child {
+/* .log__list .log__group:first-child {
   max-width: 145px;
-}
+} */
 
 .log .selectize-control .selectize-input,
 .log .selectize-control.single .selectize-input.input-active {
@@ -6874,6 +6881,7 @@ button {
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 1.5px 2.6px 3px rgba(206, 218, 228, 0.4), 0 0 46px rgba(160, 175, 185, 0.1);
+  margin-bottom: 30px;
 }
 
 .sortby__title {
@@ -8769,13 +8777,12 @@ button {
   }
 
   .log__list .check {
-    width: 50%;
-    max-width: none;
-    -ms-flex-preferred-size: 305px;
-    flex-basis: 305px;
+    width: 25%;
+    /* -ms-flex-preferred-size: 305px;
+    flex-basis: 305px; */
   }
 
-  .log__list .check:nth-child(2) {
+  /* .log__list .check:nth-child(2) {
     max-width: none;
     -ms-flex-preferred-size: 200px;
     flex-basis: 200px;
@@ -8791,7 +8798,7 @@ button {
     max-width: none;
     -ms-flex-preferred-size: 200px;
     flex-basis: 200px;
-  }
+  } */
 
   .shop .sidebar {
     width: 100%;
@@ -10236,9 +10243,9 @@ button {
     padding: 0 15px 40px;
   }
 
-  .log__list .check:nth-child(3):after {
+  /* .log__list .check:nth-child(3):after {
     max-width: 250px;
-  }
+  } */
 }
 
 @media screen and (max-width: 320px) {
@@ -10341,4 +10348,37 @@ aside.sidebar .widget {
 
 .btn__mrg {
     margin-right: 15px !important;
+}
+
+.checkout #payment {
+    background: none;
+}
+
+.woocommerce-checkout .log label:after {
+    display: none !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+    padding: 0;
+    border: 0;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li {
+    line-height: 1.4;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li img {
+    margin: 20px 0 0;
+}
+
+.woocommerce-checkout #payment div.form-row {
+    padding: 0;
+}
+
+.woocommerce-terms-and-conditions-wrapper {
+    flex-grow: 1;
+}
+
+.woocommerce-thankyou-order-received {
+    margin-bottom: 20px;
 }

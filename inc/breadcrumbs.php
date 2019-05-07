@@ -66,14 +66,14 @@ function wayup_get_breadcrumbs() {
         } elseif ( is_year() ) {
             echo $before . get_the_time('Y') . $after;
         } elseif ( is_single() && !is_attachment() ) {
-
+            
             // если страница магазина
             if(get_post_type() == 'product') {
                 $post_type = get_post_type_object(get_post_type());
                 $slug = $post_type->rewrite;
                 printf($link, $home_link . '/' . $slug['slug'] . '/', $post_type->labels->singular_name);
                 if ($show_current == 1) echo $delimiter . $before . $short_product_name . $after;
-            }
+            } 
             elseif ( get_post_type() != 'post' ) {
                 $post_type = get_post_type_object(get_post_type());
                 $slug = $post_type->rewrite;

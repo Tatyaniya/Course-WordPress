@@ -1,0 +1,270 @@
+<?php
+
+class Wayup_Filter_Widget extends WP_Widget {
+	/**
+	 * General Setup 
+	 */
+	public function __construct() {
+	
+		/* Widget settings. */
+		$widget_ops = array(
+			'classname' => 'wayup_filter_widget', 
+			'description' => 'Виджет, который выводит Ajax фильтрацию'
+		);
+		/* Widget control settings. */
+		$control_ops = array(
+			'width'		=> 500, 
+			'height'	=> 450, 
+			'id_base'	=> 'wayup_filter_widget' 
+		);
+		/* Create the widget. */
+		parent::__construct( 'wayup_filter_widget', 'Wayup | Ajax Filter', $widget_ops, $control_ops );
+	}
+	/**
+	 * Display Widget
+	 * @param array $args
+	 * @param array $instance 
+	 */
+	public function widget( $args, $instance ) 
+	{
+		extract( $args );
+		
+        $title1 = $instance['title1'];
+        $title2 = $instance['title2'];
+
+        $prices = $this->get_filtered_price();
+        $min = floor($prices->min_price);
+        $max = ceil($prices->max_price);
+		
+        // Display Widget
+        ?> 
+
+        <div class="sortby wayup_sortby" data-minprice="<?php echo $min; ?>" data-maxprice="<?php echo $max; ?>">
+            <h5 class="sortby__title"><?php echo $title1; ?></h5>
+            <div id="slider-range"></div>
+            <p class="sortby__price">
+                <label for="amount">Цена：</label>
+                <input type="text" id="price">
+            </p>
+        </div>
+        <div class="categories side-nav log">
+            <h5 class="categories__title"><?php echo $title2; ?></h5>
+            <div id="st-accordion" class="st-accordion">
+                <ul>
+                    <li>
+                        <a href="#">Канцелярия</a>
+                        <div class="st-content cat-list">
+                            <div class="log__group check">
+                                <input id="pen" type="checkbox" name="office" value="pen">
+                                <label for="pen">Ручки</label>
+                            </div>
+                        
+                            <div class="log__group check">
+                                <input id="assets" type="checkbox" name="office" value="assets">
+                                <label for="assets">Наборы</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="press" type="checkbox" name="office" value="press">
+                                <label for="press">Пресс-папье</label>
+                            </div>
+                            <div class="log__group check">
+                                <input id="of-more" type="checkbox" name="office" value="of-more">
+                                <label for="of-more">Другое</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">Аксессуары</a>
+                        <div class="st-content cat-list">
+                            <div class="log__group check">
+                                <input id="tie" type="checkbox" name="office" value="tie">
+                                <label for="tie">Галстуки</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="clock" type="checkbox" name="office" value="clock">
+                                <label for="clock">Часы</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="socks" type="checkbox" name="office" value="socks">
+                                <label for="socks">Носки</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="studs" type="checkbox" name="office" value="studs">
+                                <label for="studs">Запонки</label>
+                            </div>
+                            
+                            <div class="log__group check">
+                                <input id="glasses" type="checkbox" name="office" value="glasses">
+                                <label for="glasses">Очки</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="strap" type="checkbox" name="office" value="strap">
+                                <label for="strap">Ремни</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="ac-more" type="checkbox" name="office" value="ac-more">
+                                <label for="ac-more">Другое</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">Одежда</a>
+                        <div class="st-content cat-list">
+                            <div class="log__group check">
+                                <input id="shirt" type="checkbox" name="office" value="shirt">
+                                <label for="shirt">Рубашки</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="vest" type="checkbox" name="office" value="vest">
+                                <label for="vest">Жилеты</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="polo" type="checkbox" name="office" value="polo">
+                                <label for="polo">Футболки</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">Обувь</a>
+                        <div class="st-content cat-list">
+                            <div class="log__group check">
+                                <input id="boots" type="checkbox" name="office" value="boots">
+                                <label for="boots">Туфли</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="cross" type="checkbox" name="office" value="cross">
+                                <label for="cross">Кроссовки</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="slippers" type="checkbox" name="office" value="slippers">
+                                <label for="slippers">Тапочки</label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#">Сумки</a>
+                        <div class="st-content cat-list">
+                            <div class="log__group check">
+                                <input id="back" type="checkbox" name="office" value="back">
+                                <label for="back">Рюкзаки</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="leather" type="checkbox" name="office" value="leather">
+                                <label for="leather">Кожаные</label>
+                            </div>
+                
+                            <div class="log__group check">
+                                <input id="badger" type="checkbox" name="office" value="badger">
+                                <label for="badger">Барсетки</label>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#">Специальные предложения</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+		<?php
+    }
+    
+    protected function get_filtered_price() {
+        global $wpdb;
+
+        $args       = WC()->query->get_main_query()->query_vars;
+        $tax_query  = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+        $meta_query = isset( $args['meta_query'] ) ? $args['meta_query'] : array();
+
+        if ( ! is_post_type_archive( 'product' ) && ! empty( $args['taxonomy'] ) && ! empty( $args['term'] ) ) {
+            $tax_query[] = array(
+                'taxonomy' => $args['taxonomy'],
+                'terms'    => array( $args['term'] ),
+                'field'    => 'slug',
+            );
+        }
+
+        foreach ( $meta_query + $tax_query as $key => $query ) {
+            if ( ! empty( $query['price_filter'] ) || ! empty( $query['rating_filter'] ) ) {
+                unset( $meta_query[ $key ] );
+            }
+        }
+
+        $meta_query = new WP_Meta_Query( $meta_query );
+        $tax_query  = new WP_Tax_Query( $tax_query );
+        $search     = WC_Query::get_main_search_query_sql();
+
+        $meta_query_sql   = $meta_query->get_sql( 'post', $wpdb->posts, 'ID' );
+        $tax_query_sql    = $tax_query->get_sql( $wpdb->posts, 'ID' );
+        $search_query_sql = $search ? ' AND ' . $search : '';
+
+        $sql = "
+            SELECT min( min_price ) as min_price, MAX( max_price ) as max_price
+            FROM {$wpdb->wc_product_meta_lookup}
+            WHERE product_id IN (
+                SELECT ID FROM {$wpdb->posts}
+                " . $tax_query_sql['join'] . $meta_query_sql['join'] . "
+                WHERE {$wpdb->posts}.post_type IN ('" . implode( "','", array_map( 'esc_sql', apply_filters( 'woocommerce_price_filter_post_type', array( 'product' ) ) ) ) . "')
+                AND {$wpdb->posts}.post_status = 'publish'
+                " . $tax_query_sql['where'] . $meta_query_sql['where'] . $search_query_sql . '
+            )';
+
+        $sql = apply_filters( 'woocommerce_price_filter_sql', $sql, $meta_query_sql, $tax_query_sql );
+
+        return $wpdb->get_row( $sql ); // WPCS: unprepared SQL ok.
+    }
+    
+	/**
+	 * Update Widget - отвечает за сохранение
+	 * @param array $new_instance
+	 * @param array $old_instance
+	 * @return array 
+	 */
+	public function update( $new_instance, $old_instance ) 
+	{
+		$instance = $old_instance;
+		
+        $instance['title1'] = strip_tags( $new_instance['title1'] );
+        $instance['title2'] = strip_tags( $new_instance['title2'] );
+        
+		return $instance;
+	}
+	
+	/**
+	 * Создание формы виджета в админке
+	 * @param array $instance 
+	 */
+	public function form( $instance ) 
+	{
+		//default widget settings.
+		$defaults = array(
+            'title1'		=> 'Сортировать по цене',
+            'title2'		=> 'Категории товаров',
+		);
+		$instance = wp_parse_args( (array) $instance, $defaults ); 
+		
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title1' ); ?>">Фильтрация по цене | Заголовок</label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title1' ); ?>" name="<?php echo $this->get_field_name( 'title1' ); ?>" value="<?php echo $instance['title1']; ?>" />
+        </p>
+        <p>
+			<label for="<?php echo $this->get_field_id( 'title2' ); ?>">Фильтрация по категории | Заголовок</label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title2' ); ?>" name="<?php echo $this->get_field_name( 'title2' ); ?>" value="<?php echo $instance['title2']; ?>" />
+		</p>
+	<?php
+	}
+}

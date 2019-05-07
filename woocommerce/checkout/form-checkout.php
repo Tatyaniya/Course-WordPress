@@ -29,7 +29,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 ?>
 
-<form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+<form name="checkout" method="post" class="checkout woocommerce-checkout log" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
 	<?php if ( $checkout->get_checkout_fields() ) : ?>
 
@@ -42,6 +42,18 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 			<div class="pay__block">
 				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
+            </div>
+            
+            <div class="pay__block">
+                <h5 class="pay__title">Информация о заказe</h5>
+	
+                <?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
+
+                <div id="order_review" class="woocommerce-checkout-review-order">
+                    <?php do_action( 'woocommerce_checkout_order_review' ); ?>
+                </div>
+
+                <?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 			</div>
 		</div>
 
@@ -51,15 +63,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 	
 	<?php do_action( 'woocommerce_checkout_before_order_review_heading' ); ?>
 	
-	<h5 class="pay__title">Информация о заказe</h5>
 	
-	<?php do_action( 'woocommerce_checkout_before_order_review' ); ?>
-
-	<div id="order_review" class="woocommerce-checkout-review-order">
-		<?php do_action( 'woocommerce_checkout_order_review' ); ?>
-	</div>
-
-	<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
 
 </form>
 

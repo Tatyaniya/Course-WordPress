@@ -40,6 +40,7 @@ function wayup_init_widgets() {
     register_widget('Wayup_Subscribe_Widget');
     register_widget('Wayup_Custom_Search_Widget');
     register_widget('Wayup_Filter_Widget');
+    register_widget('Wayup_Rating_Widget');
 }
 add_action('widgets_init', 'wayup_init_widgets');
 

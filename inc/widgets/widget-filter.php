@@ -51,130 +51,55 @@ class Wayup_Filter_Widget extends WP_Widget {
             <h5 class="categories__title"><?php echo $title2; ?></h5>
             <div id="st-accordion" class="st-accordion">
                 <ul>
-                    <li>
-                        <a href="#">Канцелярия</a>
-                        <div class="st-content cat-list">
-                            <div class="log__group check">
-                                <input id="pen" type="checkbox" name="office" value="pen">
-                                <label for="pen">Ручки</label>
-                            </div>
-                        
-                            <div class="log__group check">
-                                <input id="assets" type="checkbox" name="office" value="assets">
-                                <label for="assets">Наборы</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="press" type="checkbox" name="office" value="press">
-                                <label for="press">Пресс-папье</label>
-                            </div>
-                            <div class="log__group check">
-                                <input id="of-more" type="checkbox" name="office" value="of-more">
-                                <label for="of-more">Другое</label>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#">Аксессуары</a>
-                        <div class="st-content cat-list">
-                            <div class="log__group check">
-                                <input id="tie" type="checkbox" name="office" value="tie">
-                                <label for="tie">Галстуки</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="clock" type="checkbox" name="office" value="clock">
-                                <label for="clock">Часы</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="socks" type="checkbox" name="office" value="socks">
-                                <label for="socks">Носки</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="studs" type="checkbox" name="office" value="studs">
-                                <label for="studs">Запонки</label>
-                            </div>
-                            
-                            <div class="log__group check">
-                                <input id="glasses" type="checkbox" name="office" value="glasses">
-                                <label for="glasses">Очки</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="strap" type="checkbox" name="office" value="strap">
-                                <label for="strap">Ремни</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="ac-more" type="checkbox" name="office" value="ac-more">
-                                <label for="ac-more">Другое</label>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#">Одежда</a>
-                        <div class="st-content cat-list">
-                            <div class="log__group check">
-                                <input id="shirt" type="checkbox" name="office" value="shirt">
-                                <label for="shirt">Рубашки</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="vest" type="checkbox" name="office" value="vest">
-                                <label for="vest">Жилеты</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="polo" type="checkbox" name="office" value="polo">
-                                <label for="polo">Футболки</label>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#">Обувь</a>
-                        <div class="st-content cat-list">
-                            <div class="log__group check">
-                                <input id="boots" type="checkbox" name="office" value="boots">
-                                <label for="boots">Туфли</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="cross" type="checkbox" name="office" value="cross">
-                                <label for="cross">Кроссовки</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="slippers" type="checkbox" name="office" value="slippers">
-                                <label for="slippers">Тапочки</label>
-                            </div>
-                        </div>
-                    </li>
 
-                    <li>
-                        <a href="#">Сумки</a>
-                        <div class="st-content cat-list">
-                            <div class="log__group check">
-                                <input id="back" type="checkbox" name="office" value="back">
-                                <label for="back">Рюкзаки</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="leather" type="checkbox" name="office" value="leather">
-                                <label for="leather">Кожаные</label>
-                            </div>
-                
-                            <div class="log__group check">
-                                <input id="badger" type="checkbox" name="office" value="badger">
-                                <label for="badger">Барсетки</label>
-                            </div>
-                        </div>
-                    </li>
+                <?php
+                    $categories = get_terms(
+								'product_cat',
+								array(
+                                    'orderby'       => 'name',
+                                    'hierarchical'  => true,
+                                    'hide_empty'    => 0,
+                                    'parent'      => 0,
+								)
+                            );
 
-                    <li>
-                        <a href="#">Специальные предложения</a>
-                    </li>
+                    foreach($categories as $cat) { ?>
+
+                        <li>
+                            <?php $temp_cat = get_terms(
+                                        'product_cat',
+                                        array(
+                                            'orderby'       => 'name',
+                                            'hierarchical'  => true,
+                                            'hide_empty'    => 1,
+                                            'parent'      => $cat->term_id,
+                                        )
+                                    ); 
+                                $class = '';
+
+                                if($temp_cat) {
+                                    $class = 'has_child';
+                                } else {
+                                    $class = 'no_child';
+                                }    
+                            ?>
+
+                            <a href="#" class="<?php echo $class; ?>"><?php echo $cat->name; ?></a>
+                                
+                                <?php if($temp_cat) {
+                                    echo '<div class="st-content cat-list">';
+                                        foreach($temp_cat as $temp) { ?>
+                                            <div class="log__group check">
+                                                <input id="term_<?php echo $temp->term_id; ?>" type="checkbox" name="category" value="<?php echo $temp->term_id; ?>">
+                                                <label for="term_<?php echo $temp->term_id; ?>"><?php echo $temp->name; ?></label>
+                                            </div>
+                                        <?php }
+                                    echo '</div>';
+                                } ?>
+                        </li>
+
+                    <?php } ?>
+
                 </ul>
             </div>
         </div>

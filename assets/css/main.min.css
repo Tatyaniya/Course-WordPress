@@ -6800,12 +6800,20 @@ button {
   margin-bottom: 12px;
 }
 
-.shop .rating__block:last-child .rate:after {
+.shop .rating__block.stars4 .rate:after {
   width: 15px;
 }
 
-.shop .rating__block:nth-child(3) .rate:after {
+.shop .rating__block.stars3 .rate:after {
   width: 30px;
+}
+
+.shop .rating__block.stars2 .rate:after {
+    width: 45px;
+}
+
+.shop .rating__block.stars1 .rate:after {
+    width: 60px;
 }
 
 .shop .rating__title {
@@ -6999,7 +7007,7 @@ button {
 
 .woocommerce .star-rating {
     letter-spacing: 2px;
-    width: 6.4em;
+    width: 6em;
     font-size: 11px !important;
     color: #ffcc00;
 }
@@ -7325,10 +7333,6 @@ button {
   height: 40px;
 }
 
-.st-accordion ul li:last-child a:after {
-  display: none;
-}
-
 .st-accordion ul li > a {
   font-size: 17px;
   display: block;
@@ -7352,7 +7356,7 @@ button {
   transition: all 0.3s ease-in-out;
 }
 
-.st-accordion ul li > a:after {
+.st-accordion ul li > a.has_child:after {
   width: 0;
   height: 0px;
   border: 5px solid transparent;
@@ -10381,4 +10385,8 @@ aside.sidebar .widget {
 
 .woocommerce-thankyou-order-received {
     margin-bottom: 20px;
+}
+
+.shop .banner__btn  {
+    
 }

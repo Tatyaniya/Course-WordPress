@@ -36,6 +36,8 @@ class Wayup_About_Widget extends WP_Widget {
         $text = $instance['text'];
         
         $link_more = $instance['link_more'];
+
+        $link_anchore = $instance['link_anchore'];
 		
 		/* Our variables from the widget settings. */
 		$image_id = $instance[$this->image_field];
@@ -52,7 +54,7 @@ class Wayup_About_Widget extends WP_Widget {
 			?>
             <p class="banner__text"><?php echo $text; ?></p>
             <?php if($link_more) { ?>
-                <a href="<?php echo $link_more; ?>" class="banner__btn btn">Подробнее</a>
+            <a href="<?php echo $link_more; ?>" class="banner__btn <?php if($link_anchore !== 'Купить') { ?>btn<?php } ?>"><?php echo $link_anchore; ?></a>
             <?php } ?>
         </div>
 			
@@ -71,6 +73,7 @@ class Wayup_About_Widget extends WP_Widget {
 		$instance['title'] = strip_tags( $new_instance['title'] );
         $instance['text'] = strip_tags( $new_instance['text'] );
         $instance['link_more'] = strip_tags( $new_instance['link_more'] );
+        $instance['link_anchore'] = strip_tags( $new_instance['link_anchore'] );
 		
 		$instance[$this->image_field] = (int) $new_instance[$this->image_field];
 		return $instance;
@@ -87,7 +90,8 @@ class Wayup_About_Widget extends WP_Widget {
 			'title'		=> 'Юридические консультации для малого бизнеса',
             'text'		=> 'Не позволяйте юридическим вопросам отвлекать вас от ведения бизнеса',
             'link_more' => '',
-			'image'		=> '',
+            'image'		=> '',
+            'link_anchore' => '',
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults ); 
 		
@@ -105,6 +109,10 @@ class Wayup_About_Widget extends WP_Widget {
         <p>
 			<label for="<?php echo $this->get_field_id( 'link_more' ); ?>">Ссылка</label>
 			<textarea class="widefat" cols="100" rows="5" id="<?php echo $this->get_field_id( 'link_more' ); ?>" name="<?php echo $this->get_field_name( 'link_more' ); ?>" ><?php echo $instance['link_more']; ?></textarea>
+        </p>
+        <p>
+			<label for="<?php echo $this->get_field_id( 'link_anchore' ); ?>">Текст кнопки</label>
+			<textarea class="widefat" cols="100" rows="5" id="<?php echo $this->get_field_id( 'link_anchore' ); ?>" name="<?php echo $this->get_field_name( 'link_anchore' ); ?>" ><?php echo $instance['link_anchore']; ?></textarea>
 		</p>
 		<p>
 			<label>Image: </label>

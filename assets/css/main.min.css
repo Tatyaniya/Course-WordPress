@@ -10387,6 +10387,12 @@ aside.sidebar .widget {
     margin-bottom: 20px;
 }
 
-.shop .banner__btn  {
-    
+.field .min_price,
+.field .max_price {
+    width: 50px;
+}
+
+.field .tire {
+    display: inline-block;
+    width: 35px;
 }

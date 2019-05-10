@@ -35,6 +35,8 @@ class Wayup_Filter_Widget extends WP_Widget {
         $prices = $this->get_filtered_price();
         $min = floor($prices->min_price);
         $max = ceil($prices->max_price);
+
+        global  $woocommerce;
 		
         // Display Widget
         ?> 
@@ -44,7 +46,13 @@ class Wayup_Filter_Widget extends WP_Widget {
             <div id="slider-range"></div>
             <p class="sortby__price">
                 <label for="amount">Цена：</label>
-                <input type="text" id="price">
+                <span class="field">
+                    <?php echo get_woocommerce_currency_symbol(); ?>
+                    <input type="text" id="priceMin" class="min_price">
+                        <span class="tire">-</span>
+                    <?php echo get_woocommerce_currency_symbol(); ?>
+                    <input type="text" id="priceMax" class="max_price">
+                </span>
             </p>
         </div>
         <div class="categories side-nav log">
@@ -65,7 +73,7 @@ class Wayup_Filter_Widget extends WP_Widget {
 
                     foreach($categories as $cat) { ?>
 
-                        <li>
+                        <li class="wayup_filter_check">
                             <?php $temp_cat = get_terms(
                                         'product_cat',
                                         array(
@@ -81,7 +89,7 @@ class Wayup_Filter_Widget extends WP_Widget {
                                     $class = 'has_child';
                                 } else {
                                     $class = 'no_child';
-                                }    
+                                } 
                             ?>
 
                             <a href="#" class="<?php echo $class; ?>"><?php echo $cat->name; ?></a>

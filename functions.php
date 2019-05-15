@@ -533,3 +533,55 @@ function wayup_show_products() {
 
 add_action('wp_ajax_wayup_filter', 'wayup_show_products');
 add_action('wp_ajax_nopriv_wauyp_filter', 'wayup_show_products');
+
+// Новое поле для телефона при регистрации
+add_action( 'register_form', 'wayup_add_registration_fields' );
+
+function wayup_add_registration_fields() {
+
+    //Get and set any values already sent
+    $user_phone = ( isset( $_POST['billing_phone'] ) ) ? $_POST['billing_phone'] : '';
+
+    $user_first_name = ( isset( $_POST['billing_first_name'] ) ) ? $_POST['billing_first_name'] : '';
+    ?>
+
+    <p>
+        <label for="billing_phone"><?php _e( 'Phone', 'wayup' ) ?><br />
+            <input type="text" name="billing_phone" id="billing_phone" class="input" value="<?php echo esc_attr( stripslashes( $user_phone ) ); ?>"></label>
+    </p>
+
+    <p>
+        <label for="billing_first_name"><?php _e( 'Name', 'wayup' ) ?><br />
+            <input type="text" name="billing_first_name" id="billing_first_name" class="input" value="<?php echo esc_attr( stripslashes( $user_first_name ) ); ?>"></label>
+    </p>
+
+    <?php
+}
+
+//2. Хук для валидации телефона и имени
+add_filter( 'registration_errors', 'wayup_registration_errors', 10, 3 );
+function wayup_registration_errors( $errors, $sanitized_user_login, $user_email ) {
+    
+    if ( empty( $_POST['billing_phone'] ) || ! empty( $_POST['billing_phone'] ) && trim( $_POST['billing_phone'] ) == '' ) {
+    $errors->add( 'billing_phone_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'wayup' ),__( 'You must include a phone.', 'wayup' ) ) );
+
+    }
+
+    if ( empty( $_POST['billing_first_name'] ) || ! empty( $_POST['billing_first_name'] ) && trim( $_POST['billing_first_name'] ) == '' ) {
+        $errors->add( 'billing_first_name_error', sprintf('<strong>%s</strong>: %s',__( 'ERROR', 'wayup' ),__( 'You must include a name.', 'wayup' ) ) );
+    
+    }
+
+    return $errors;
+}
+
+//3. Сохранение телефона и имени
+add_action( 'user_register', 'wayup_user_register' );
+function wayup_user_register( $user_id ) {
+    if ( ! empty( $_POST['billing_phone'] ) ) {
+        update_user_meta( $user_id, 'billing_phone', sanitize_text_field( $_POST['billing_phone'] ) );
+    }
+    if ( ! empty( $_POST['billing_first_name'] ) ) {
+        update_user_meta( $user_id, 'billing_first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
+    }
+}

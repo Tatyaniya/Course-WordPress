@@ -52,7 +52,7 @@ $(function() {
         wayup_get_posts();
     });
 
-    $(document).on("click",".page-numbers",function(e){
+    $(document).on("click",".woocommerce .page-numbers",function(e){
         e.preventDefault();
  
         var url = $(this).attr('href'); //Grab the URL destination as a string

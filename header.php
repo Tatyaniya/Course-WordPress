@@ -126,22 +126,32 @@ global $wayup_options;
 						</li>
 					</ul>
 				</div>
-			</div>
-			<div class="control">
-				<a href="#enter" class="control__enter popup-link-1">
-					<svg class="control__icon" width="19" height="17">
-						<use xlink:href="#login"/>
-					</svg>
-					Вход
-				</a>
-				<a style="display: none;" href="cabinet.html" class="control__enter control__enter_cab">
-					<svg class="control__icon" width="16" height="16">
-						<use xlink:href="#user"/>
-					</svg>
-					Личный кабинет
-				</a>
-				<a href="#reg" class="control__reg noise popup-link-2">Регистрация</a>
-			</div>
+            </div>
+            
+            <?php if ( 'yes' === get_option( 'woocommerce_enable_myaccount_registration' )) { 
+                if ( is_user_logged_in() ) { ?>
+                    <div class="control">
+                        <a href="<?php echo esc_url(home_url('/lk')); ?>" class="control__enter control__enter_cab">
+                            <svg class="control__icon" width="16" height="16">
+                                <use xlink:href="#user"/>
+                            </svg>
+                            Личный кабинет
+                        </a>
+                        <a href="<?php echo wp_logout_url( home_url()); ?>" class="control__reg noise">Выйти</a>
+                    </div>
+                <?php } else { ?>
+                    <div class="control">
+                        <a href="#enter" class="control__enter popup-link-1">
+                            <svg class="control__icon" width="19" height="17">
+                                <use xlink:href="#login"/>
+                            </svg>
+                            Вход
+                        </a>
+                        <a href="#reg" class="control__reg noise popup-link-2">Регистрация</a>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+
 		</div>
 
 		<div class="navigation">

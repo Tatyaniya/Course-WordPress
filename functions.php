@@ -585,3 +585,15 @@ function wayup_user_register( $user_id ) {
         update_user_meta( $user_id, 'billing_first_name', sanitize_text_field( $_POST['billing_first_name'] ) );
     }
 }
+
+
+// сохранение телефона в лк
+add_action( 'woocommerce_save_account_details', 'wayup_woocommerce_save_account_details' );
+
+function wayup_woocommerce_save_account_details( $user_id ) {
+ 
+    update_user_meta( $user_id, 'billing_phone', htmlentities( $_POST[ 'billing_phone' ] ) );
+
+    //$user = wp_update_user( array( 'ID' => $user_id, 'user_url' => esc_url( $_POST[ 'url' ] ) ) );
+   
+  }

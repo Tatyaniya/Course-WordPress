@@ -17,60 +17,110 @@
 
 defined( 'ABSPATH' ) || exit;
 
-do_action( 'woocommerce_before_edit_account_form' ); ?>
+do_action( 'woocommerce_before_edit_account_form' );
 
-<form class="woocommerce-EditAccountForm edit-account" action="" method="post" <?php do_action( 'woocommerce_edit_account_form_tag' ); ?> >
+$user_id = get_current_user_id();
+$user = get_userdata( $user_id );
+ 
+  if ( !$user )
+    return;
+ 
+$phone = get_user_meta( $user_id, 'billing_phone', true );
+?>
 
-	<?php do_action( 'woocommerce_edit_account_form_start' ); ?>
+<form action="" id="displayMessage" class="cabinet__form" method="post">
+    <div class="avatar">
+        <div class="avatar__img">
+            <img src="<?php echo get_avatar_url($user_id, array('size' => 200)); ?>" alt="Личное фото">
+            <a href="http://gravatar.com" title="Удалить аватарку" class="avatar__delete"></a>
+        </div>
+        <div class="avatar__load">
+            <a href="http://gravatar.com">
+                <button type="button">
+                    <svg>
+                        <use xlink:href="#camera"/>
+                    </svg>
+                    Сменить аватарку
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="edit">
+        <a href="<?php echo wp_logout_url( home_url()); ?>" class="exit">
+            <svg class="exit__icon" width="17" height="15">
+                <use xlink:href="#login"/>
+            </svg>
+            Выход
+        </a>
+        <span class="modal-сaution">Личные данные успешно изменены</span>
+        <div class="edit__block">
+            <?php //print_r($user); ?>
 
-	<p class="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
-		<label for="account_first_name"><?php esc_html_e( 'First name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_first_name" id="account_first_name" autocomplete="given-name" value="<?php echo esc_attr( $user->first_name ); ?>" />
-	</p>
-	<p class="woocommerce-form-row woocommerce-form-row--last form-row form-row-last">
-		<label for="account_last_name"><?php esc_html_e( 'Last name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_last_name" id="account_last_name" autocomplete="family-name" value="<?php echo esc_attr( $user->last_name ); ?>" />
-	</p>
-	<div class="clear"></div>
+            <?php do_action( 'woocommerce_edit_account_form_start' ); ?>
 
-	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-		<label for="account_display_name"><?php esc_html_e( 'Display name', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="account_display_name" id="account_display_name" value="<?php echo esc_attr( $user->display_name ); ?>" /> <span><em><?php esc_html_e( 'This will be how your name will be displayed in the account section and in reviews', 'woocommerce' ); ?></em></span>
-	</p>
-	<div class="clear"></div>
+            <div class="edit__group">
+                <label><?php esc_html_e( 'First name', 'woocommerce' ); ?></label>
+                <input type="text" name="account_first_name" class="edit__input" value="<?php echo esc_attr( $user->first_name ); ?>">
+            </div>
 
-	<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-		<label for="account_email"><?php esc_html_e( 'Email address', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
-		<input type="email" class="woocommerce-Input woocommerce-Input--email input-text" name="account_email" id="account_email" autocomplete="email" value="<?php echo esc_attr( $user->user_email ); ?>" />
-	</p>
+            <div class="edit__group">
+                <label><?php esc_html_e( 'Last name', 'woocommerce' ); ?></label>
+                <input type="text" name="account_last_name" class="edit__input" value="<?php echo esc_attr( $user->last_name ); ?>">
+            </div>
 
-	<fieldset>
-		<legend><?php esc_html_e( 'Password change', 'woocommerce' ); ?></legend>
+            <div class="edit__group">
+                <label><?php esc_html_e( 'Display name', 'woocommerce' ); ?></label>
+                <input type="text" name="account_display_name" class="edit__input" value="<?php echo esc_attr( $user->display_name ); ?>">
+            </div>
 
-		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-			<label for="password_current"><?php esc_html_e( 'Current password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
-			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_current" id="password_current" autocomplete="off" />
-		</p>
-		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-			<label for="password_1"><?php esc_html_e( 'New password (leave blank to leave unchanged)', 'woocommerce' ); ?></label>
-			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_1" id="password_1" autocomplete="off" />
-		</p>
-		<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-			<label for="password_2"><?php esc_html_e( 'Confirm new password', 'woocommerce' ); ?></label>
-			<input type="password" class="woocommerce-Input woocommerce-Input--password input-text" name="password_2" id="password_2" autocomplete="off" />
-		</p>
-	</fieldset>
-	<div class="clear"></div>
+            <div class="edit__group">
+                <label><?php esc_html_e( 'Email address', 'woocommerce' ); ?></label>
+                <input type="email" name="account_email" class="edit__input" value="<?php echo esc_attr( $user->user_email ); ?>">
+            </div>
 
-	<?php do_action( 'woocommerce_edit_account_form' ); ?>
+            <div class="edit__group">
+                <label>Телефон</label>
+                <input type="tel" name="billing_phone" class="edit__input" value="<?php echo esc_attr( $user->billing_phone ); ?>">
+            </div>
 
-	<p>
-		<?php wp_nonce_field( 'save_account_details', 'save-account-details-nonce' ); ?>
-		<button type="submit" class="woocommerce-Button button" name="save_account_details" value="<?php esc_attr_e( 'Save changes', 'woocommerce' ); ?>"><?php esc_html_e( 'Save changes', 'woocommerce' ); ?></button>
-		<input type="hidden" name="action" value="save_account_details" />
-	</p>
+            <div class="edit__group show-pass">
+                <label><?php esc_html_e( 'Current password', 'woocommerce' ); ?></label>
+                <input id="edit-pass" type="password" name="password_current" class="edit__input">
+                <span class="edit__eye password-eye" data-target="#edit-pass">
+                    <svg width="34" height="22">
+                        <use xlink:href="#eye"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="edit__group show-pass">
+                <label><?php esc_html_e( 'New password', 'woocommerce' ); ?></label>
+                <input id="edit-pass" type="password" name="password_1" class="edit__input">
+                <span class="edit__eye password-eye" data-target="#edit-pass">
+                    <svg width="34" height="22">
+                        <use xlink:href="#eye"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="edit__group show-pass">
+                <label><?php esc_html_e( 'Confirm new password', 'woocommerce' ); ?></label>
+                <input id="edit-pass" type="password" name="password_2" class="edit__input">
+                <span class="edit__eye password-eye" data-target="#edit-pass">
+                    <svg width="34" height="22">
+                        <use xlink:href="#eye"/>
+                    </svg>
+                </span>
+            </div>
+            <?php do_action( 'woocommerce_edit_account_form' ); ?>
 
-	<?php do_action( 'woocommerce_edit_account_form_end' ); ?>
+            <div class="edit__btn">
+                <input type="submit" id="save-edit" value="Сохранить" class="btn" name="save_account_details"/>
+            </div>
+
+            <?php wp_nonce_field( 'save_account_details', 'save-account-details-nonce' ); ?>
+            <input type="hidden" name="action" value="save_account_details" />
+            <?php do_action( 'woocommerce_edit_account_form_end' ); ?>
+        </div>
+    </div>
 </form>
 
 <?php do_action( 'woocommerce_after_edit_account_form' ); ?>

@@ -3954,12 +3954,11 @@ button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-wrap: wrap;
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
 }
 
@@ -4073,7 +4072,8 @@ button {
 }
 
 .avatar {
-  margin-right: 30px;
+    width: 100%;
+    margin-bottom: 30px;
 }
 
 .avatar__img {
@@ -4085,6 +4085,7 @@ button {
   overflow: hidden;
   background-color: #ccc;
   position: relative;
+  margin: 0 auto;
 }
 
 .avatar__img:hover .avatar__delete {
@@ -4104,7 +4105,7 @@ button {
 }
 
 .avatar__load {
-  margin-top: 7px;
+  margin: 7px auto;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
   max-width: 160px;
@@ -10395,4 +10396,23 @@ aside.sidebar .widget {
 .field .tire {
     display: inline-block;
     width: 35px;
+}
+
+.woocommerce-MyAccount-navigation-link {
+    margin-bottom: 21px;
+}
+
+.woocommerce-MyAccount-navigation-link a {
+    color: #00b4ff;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+
+.woocommerce-MyAccount-navigation-link a:hover {
+    color: #858585;
 }

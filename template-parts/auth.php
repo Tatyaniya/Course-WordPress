@@ -34,7 +34,9 @@
 			
 			<div class="var">
 				<p class="var__text">Или войдите в систему с помощью</p>
-				<ul class="var__list">
+
+                <?php echo do_shortcode('[TheChamp-Login]') ?>
+				<!-- <ul class="var__list">
 					<li>
 						<a href="#" class="var__link var__link_goo">
 							<svg width="14" height="14">
@@ -56,7 +58,7 @@
 							</svg>
 						</a>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 		</div>
 

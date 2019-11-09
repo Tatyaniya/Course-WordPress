@@ -154,7 +154,7 @@ function wayup_save_comment_meta_data( $comment_id ) {
     }
     if(!empty($_POST[ 'social' ])) {
 
-        $social = sanitize_meta( 'phone', $_POST[ 'phone' ], 'comment' );
+        $social = sanitize_meta( 'social', $_POST[ 'social' ], 'comment' );
         
         add_comment_meta( $comment_id, 'social', $social );
     }

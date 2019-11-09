@@ -223,10 +223,13 @@ main {
 }
 
 img {
-  /*width: 100%;*/
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.news__img img {
+    width: 100%;
 }
 
 header,
@@ -242,6 +245,9 @@ svg,
 .scrollto {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
 
 a,
@@ -739,13 +745,13 @@ button {
   opacity: .6;
 }
 
-.language .lang-item.active {
+.language .lang-item.current-lang {
   color: #26afff;
   position: relative;
   font-weight: 600;
 }
 
-.language .lang-item.active:before {
+.language .lang-item.current-lang:before {
   position: absolute;
   content: '';
   background-color: #26afff;
@@ -2825,7 +2831,8 @@ button {
   font-size: 14px;
 }
 
-.var__list {
+.var__list,
+.the_champ_login_ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2852,7 +2859,8 @@ button {
   text-align: center;
 }
 
-.var__link:hover {
+.var__link:hover,
+.theChampLogin:hover {
   opacity: .85;
 }
 
@@ -10415,4 +10423,19 @@ aside.sidebar .widget {
 
 .woocommerce-MyAccount-navigation-link a:hover {
     color: #858585;
+}
+
+.woocommerce img, .woocommerce-page img {
+    margin: 0 auto;
+}
+
+.the_champ_login_ul .theChampLogin {
+    margin: 6px !important;
+    width: 52px !important;
+}
+
+.the_champ_login_ul .theChampFacebookLoginSvg {
+    background-size: 100% !important;
+    padding-left: 0;
+    padding-top: 0;
 }

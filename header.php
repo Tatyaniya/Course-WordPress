@@ -117,14 +117,14 @@ global $wayup_options;
                 <?php } ?>
 
 				<div class="language">
-					<ul>
-						<li class="lang-item active">
-							<a href="#">Ru</a>
-						</li>
-						<li class="lang-item">
-							<a href="#">En</a>
-						</li>
-					</ul>
+                    <?php
+						wp_nav_menu( array(
+							'theme_location' => 'menu-lenguage',
+							'menu_id'        => '',
+							'menu_class'	 => '',
+							'container'		 => ''
+						) );
+					?>
 				</div>
             </div>
             

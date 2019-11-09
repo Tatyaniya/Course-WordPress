@@ -80,7 +80,7 @@ get_header();
                         <?php $prev_post = get_previous_post();
                             if (!empty( $prev_post )): ?>
                             <li class="prev">
-                                <a href="<?php echo $prev_post->guid ?>">Предыдущая новость</a>
+                                <a href="<?php echo $prev_post->guid ?>"><?php echo esc_html_e('Предыдущая новость', 'wayup'); ?></a>
                             </li>
                         <?php endif;
                             $next_post = get_next_post();

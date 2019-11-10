@@ -624,8 +624,6 @@ function wayup_show_products() {
 
     // по умолчанию по популярности
     $orderby = 'total_sales';
-    print_r('1');
-    var_dump($orderby);
 
     $orderby = $query_data['order'];
     
@@ -651,37 +649,33 @@ function wayup_show_products() {
                 'compare' => 'BETWEEN',
                 'type' => 'NUMERIC'
                 ),
-            ),
-            /*'orderby'  => 'meta_value_num',
-            'meta_key' => '_wc_average_rating',
-            'order'    => 'desc'*/
+            )
     );
-
     switch ( $orderby ) {
         case 'date':
-            $args['orderby']  = 'date';
-            // $args['meta_key'] = 'date';
-            $args['order']    = 'desc';
+            $args['orderby'] = 'date';
+            //$args['meta_key'] = 'date';
+            $args['order'] = 'desc';
             break;
         case 'price':
-            $args['orderby']  = 'meta_value_num';
+            $args['orderby'] = 'meta_value_num';
             $args['meta_key'] = '_price';
-            $args['order']    = 'asc';
+            $args['order'] = 'asc';
             break;
         case 'price-desc':
-            $args['orderby']  = 'meta_value_num';
+            $args['orderby'] = 'meta_value_num';
             $args['meta_key'] = '_price';
-            $args['order']    = 'desc';
+            $args['order'] = 'desc';
             break;
         case 'popularity':
-            $args['orderby']  = 'popularity';
+            $args['orderby'] = 'meta_value_num';
             $args['meta_key'] = 'total_sales';
-            $args['order']    = 'desc';
+            $args['order'] = 'desc';
             break;
         case 'rating':
-            $args['orderby']  = 'meta_value_num';
+            $args['orderby'] = 'meta_value_num';
             $args['meta_key'] = '_wc_average_rating';
-            $args['order']    = 'desc';
+            $args['order'] = 'desc';
             break;
     }
 

